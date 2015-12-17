@@ -73,9 +73,9 @@ namespace MissionPlanner.GCSViews
 
         public enum altmode
         {
-            Relative = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT,
-            Absolute = MAVLink.MAV_FRAME.GLOBAL,
-            Terrain = MAVLink.MAV_FRAME.GLOBAL_TERRAIN_ALT
+            Relative = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT
+            //Absolute = MAVLink.MAV_FRAME.GLOBAL,
+            //Terrain = MAVLink.MAV_FRAME.GLOBAL_TERRAIN_ALT
         }
 
         private void poieditToolStripMenuItem_Click(object sender, EventArgs e)
@@ -260,16 +260,16 @@ namespace MissionPlanner.GCSViews
                     // not online and verify alt via srtm
                     if (CHK_verifyheight.Checked) // use srtm data
                     {
-                        // is absolute but no verify
-                        if ((altmode) CMB_altmode.SelectedValue == altmode.Absolute)
-                        {
-                            //abs
-                            cell.Value =
-                                ((srtm.getAltitude(lat, lng).alt)*CurrentState.multiplierdist +
-                                 int.Parse(TXT_DefaultAlt.Text)).ToString();
-                        }
-                        else
-                        {
+                        //// is absolute but no verify
+                        //if ((altmode) CMB_altmode.SelectedValue == altmode.Absolute)
+                        //{
+                        //    //abs
+                        //    cell.Value =
+                        //        ((srtm.getAltitude(lat, lng).alt)*CurrentState.multiplierdist +
+                        //         int.Parse(TXT_DefaultAlt.Text)).ToString();
+                        //}
+                        //else
+                        //{
                             //relative and verify
                             cell.Value =
                                 ((int) (srtm.getAltitude(lat, lng).alt)*CurrentState.multiplierdist +
@@ -278,7 +278,7 @@ namespace MissionPlanner.GCSViews
                                      srtm.getAltitude(MainV2.comPort.MAV.cs.HomeLocation.Lat,
                                          MainV2.comPort.MAV.cs.HomeLocation.Lng).alt*CurrentState.multiplierdist)
                                     .ToString();
-                        }
+                        //}
                     }
 
                     cell.DataGridView.EndEdit();
@@ -1121,10 +1121,10 @@ namespace MissionPlanner.GCSViews
                 catch
                 {
                 }
-                if ((altmode) CMB_altmode.SelectedValue == altmode.Absolute)
-                {
-                    homealt = 0; // for absolute we dont need to add homealt
-                }
+                //if ((altmode) CMB_altmode.SelectedValue == altmode.Absolute)
+                //{
+                //    homealt = 0; // for absolute we dont need to add homealt
+                //}
 
                 int usable = 0;
 
@@ -1816,14 +1816,14 @@ namespace MissionPlanner.GCSViews
         /// <param name="e"></param>
         private void BUT_write_Click(object sender, EventArgs e)
         {
-            if ((altmode) CMB_altmode.SelectedValue == altmode.Absolute)
-            {
-                if (DialogResult.No ==
-                    CustomMessageBox.Show("Absolute Alt is selected are you sure?", "Alt Mode", MessageBoxButtons.YesNo))
-                {
+            //if ((altmode) CMB_altmode.SelectedValue == altmode.Absolute)
+            //{
+            //    if (DialogResult.No ==
+            //        CustomMessageBox.Show("Absolute Alt is selected are you sure?", "Alt Mode", MessageBoxButtons.YesNo))
+            //    {
                     CMB_altmode.SelectedValue = (int) altmode.Relative;
-                }
-            }
+            //    }
+            //}
 
             // check for invalid grid data
             for (int a = 0; a < Commands.Rows.Count - 0; a++)
@@ -2039,18 +2039,18 @@ namespace MissionPlanner.GCSViews
                     {
                         var mode = currentaltmode;
 
-                        if (mode == altmode.Terrain)
-                        {
-                            frame = MAVLink.MAV_FRAME.GLOBAL_TERRAIN_ALT;
-                        }
-                        else if (mode == altmode.Absolute)
-                        {
-                            frame = MAVLink.MAV_FRAME.GLOBAL;
-                        }
-                        else
-                        {
+                        //if (mode == altmode.Terrain)
+                        //{
+                        //    frame = MAVLink.MAV_FRAME.GLOBAL_TERRAIN_ALT;
+                        //}
+                        //else if (mode == altmode.Absolute)
+                        //{
+                        //    frame = MAVLink.MAV_FRAME.GLOBAL;
+                        //}
+                        //else
+                        //{
                             frame = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT;
-                        }
+                        //}
                     }
 
                     // try send the wp
@@ -2179,15 +2179,16 @@ namespace MissionPlanner.GCSViews
                 if (temp.id < (byte) MAVLink.MAV_CMD.LAST || temp.id == (byte) MAVLink.MAV_CMD.DO_SET_HOME)
                 {
                     // check ralatice and terrain flags
-                    if ((temp.options & 0x9) == 0 && i != 0)
-                    {
-                        CMB_altmode.SelectedValue = (int) altmode.Absolute;
-                    } // check terrain flag
-                    else if ((temp.options & 0x8) != 0 && i != 0)
-                    {
-                        CMB_altmode.SelectedValue = (int) altmode.Terrain;
-                    } // check relative flag
-                    else if ((temp.options & 0x1) != 0 && i != 0)
+                    //if ((temp.options & 0x9) == 0 && i != 0)
+                    //{
+                    //    CMB_altmode.SelectedValue = (int) altmode.Absolute;
+                    //} // check terrain flag
+                    //else if ((temp.options & 0x8) != 0 && i != 0)
+                    //{
+                    //    CMB_altmode.SelectedValue = (int) altmode.Terrain;
+                    //} // check relative flag
+                    //else
+                    if ((temp.options & 0x1) != 0 && i != 0)
                     {
                         CMB_altmode.SelectedValue = (int) altmode.Relative;
                     }

@@ -115,22 +115,23 @@ namespace MissionPlanner
                 }
 
                 // deal with at mode
-                if (altmode == GCSViews.FlightPlanner.altmode.Terrain)
-                {
-                    list1 = list4terrain;
-                    break;
-                }
-                else if (altmode == GCSViews.FlightPlanner.altmode.Relative)
+                //if (altmode == GCSViews.FlightPlanner.altmode.Terrain)
+                //{
+                //    list1 = list4terrain;
+                //    break;
+                //}
+                //else
+                if (altmode == GCSViews.FlightPlanner.altmode.Relative)
                 {
                     // already includes the home alt
                     list1.Add(a, (planloc.Alt/CurrentState.multiplierdist), 0, planloc.Tag);
                 }
-                else
-                {
-                    // abs
-                    // already absolute
-                    list1.Add(a, (planloc.Alt/CurrentState.multiplierdist), 0, planloc.Tag);
-                }
+                //else
+                //{
+                //    // abs
+                //    // already absolute
+                //    list1.Add(a, (planloc.Alt/CurrentState.multiplierdist), 0, planloc.Tag);
+                //}
 
                 lastloc = planloc;
                 count++;

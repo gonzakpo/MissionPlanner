@@ -406,8 +406,8 @@ namespace MissionPlanner
             }
             else
             {
-                MenuTerminal.Visible = true;
-                MenuSimulation.Visible = true;
+                //MenuTerminal.Visible = true;
+                //MenuSimulation.Visible = true;
             }
         }
 
